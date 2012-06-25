@@ -1,0 +1,32 @@
+{
+    "hash": "6e1789c774648493f8e6f49051591394",
+    "packages": [
+        {
+            "package": "phing/phing",
+            "version": "2.4.12"
+        },
+        {
+            "package": "propel/propel1",
+            "version": "dev-master",
+            "source-reference": "3fc74ccffb05931ec3187b0dcff77dce732ef325",
+            "commit-date": "1340616963"
+        },
+        {
+            "package": "symfony/event-dispatcher",
+            "version": "dev-master",
+            "source-reference": "v2.1.0-BETA1",
+            "commit-date": "1338018513"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "symfony/event-dispatcher": 20,
+        "propel/propel1": 20
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "willdurand/propel-eventdispatcher-behavior",
+    "require": {
+        "symfony/event-dispatcher": "dev-master",
+        "propel/propel1": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "William DURAND",
+            "email": "william.durand1@gmail.com"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
