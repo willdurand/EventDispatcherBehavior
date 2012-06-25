@@ -58,18 +58,19 @@ EOF;
         $preSaveFired  = false;
         $postSaveFired = false;
 
-        Post::getEventDispatcher()->addListener(Post::EVENT_PRE_SAVE, function (Event $event) use (& $preSaveFired) {
+        $that = $this;
+        Post::getEventDispatcher()->addListener(Post::EVENT_PRE_SAVE, function (Event $event) use (& $preSaveFired, $that) {
             $preSaveFired = true;
 
-            $this->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
-            $this->assertInstanceOf('Post', $event->getSubject());
+            $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
+            $that->assertInstanceOf('Post', $event->getSubject());
         });
 
-        Post::getEventDispatcher()->addListener(Post::EVENT_POST_SAVE, function (Event $event) use (& $postSaveFired) {
+        Post::getEventDispatcher()->addListener(Post::EVENT_POST_SAVE, function (Event $event) use (& $postSaveFired, $that) {
             $postSaveFired = true;
 
-            $this->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
-            $this->assertInstanceOf('Post', $event->getSubject());
+            $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
+            $that->assertInstanceOf('Post', $event->getSubject());
         });
 
         $post = new Post();
