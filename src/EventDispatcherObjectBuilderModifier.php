@@ -37,6 +37,7 @@ class EventDispatcherObjectBuilderModifier
 
         $script = '';
         $script .= $this->addGetEventDispatcher($builder);
+        $script .= $this->addSetEventDispatcher($builder);
 
         return $script;
     }
@@ -46,6 +47,13 @@ class EventDispatcherObjectBuilderModifier
         $builder->declareClass('Symfony\Component\EventDispatcher\EventDispatcher');
 
         return $this->behavior->renderTemplate('objectGetEventDispatcher');
+    }
+
+    public function addSetEventDispatcher($builder)
+    {
+        $builder->declareClass('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
+        return $this->behavior->renderTemplate('objectSetEventDispatcher');
     }
 
     public function preSave()
