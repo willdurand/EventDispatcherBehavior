@@ -34,6 +34,7 @@ EOF;
     public function testObjectMethods()
     {
         $this->assertTrue(method_exists('Post', 'getEventDispatcher'));
+        $this->assertTrue(method_exists('Post', 'setEventDispatcher'));
         $this->assertTrue(defined('Post::EVENT_PRE_SAVE'));
         $this->assertTrue(defined('Post::EVENT_POST_SAVE'));
         $this->assertTrue(defined('Post::EVENT_PRE_UPDATE'));

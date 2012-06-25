@@ -5,7 +5,7 @@
 static public function getEventDispatcher()
 {
     if (null === self::$dispatcher) {
-        self::$dispatcher = new EventDispatcher();
+        self::setEventDispatcher(new EventDispatcher());
     }
 
     return self::$dispatcher;
