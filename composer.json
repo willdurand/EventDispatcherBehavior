@@ -2,6 +2,7 @@
     "name": "willdurand/propel-eventdispatcher-behavior",
     "description": "Integrates the Symfony2 EventDispatcher component in your Model classes. ",
     "keywords": [ "propel", "behavior", "event dispatcher", "event" ],
+    "license": "MIT",
     "require": {
         "symfony/event-dispatcher": "2.1.*",
         "propel/propel1": "1.6.*"
