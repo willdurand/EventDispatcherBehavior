@@ -33,7 +33,7 @@ Finally, adds this behavior to your `schema.xml`:
 ```xml
 <database name="foo">
     <table name="a-table">
-        <behavior name="eventdispatcher" />
+        <behavior name="event_dispatcher" />
     </table>
 </database>
 ```
