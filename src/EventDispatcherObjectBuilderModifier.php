@@ -112,6 +112,11 @@ class EventDispatcherObjectBuilderModifier
         ));
     }
 
+    public function objectFilter(&$script)
+    {
+        $script = preg_replace('#(implements Persistent)#', '$1, EventDispatcherAwareModelInterface', $script);
+    }
+
     protected function getEventName($eventName)
     {
         return 'propel.' . $eventName ;

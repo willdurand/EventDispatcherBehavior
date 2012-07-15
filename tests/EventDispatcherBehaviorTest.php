@@ -81,4 +81,10 @@ EOF;
         $this->assertTrue($preSaveFired);
         $this->assertTrue($postSaveFired);
     }
+
+    public function testObjectImplementsAnInterface()
+    {
+        $reflClass = new ReflectionClass('Post');
+        $this->assertTrue($reflClass->implementsInterface('EventDispatcherAwareModelInterface'));
+    }
 }
