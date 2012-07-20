@@ -34,6 +34,7 @@ class EventDispatcherObjectBuilderModifier
     {
         // declare this class for hooks
         $builder->declareClass('Symfony\Component\EventDispatcher\GenericEvent');
+        $builder->declareClass('EventDispatcherAwareModelInterface');
 
         $script = '';
         $script .= $this->addGetEventDispatcher($builder);
