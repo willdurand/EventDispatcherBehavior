@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "symfony/event-dispatcher": "~2.1",
-        "propel/propel1": "1.6.*"
+        "propel/propel1": "~1.6"
     },
     "authors": [
         {
