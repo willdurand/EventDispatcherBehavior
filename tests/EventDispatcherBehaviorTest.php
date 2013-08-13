@@ -34,7 +34,7 @@ EOF
 EOF
         );
 
-        foreach($tables as $className => $schema) {
+        foreach ($tables as $className => $schema) {
             if (!class_exists($className)) {
                 $builder = new PropelQuickBuilder();
                 $config  = $builder->getConfig();

@@ -7,10 +7,10 @@ interface EventDispatcherAwareModelInterface
     /**
      * @param EventDispatcherInterface $eventDispatcher
      */
-    static public function setEventDispatcher(EventDispatcherInterface $eventDispatcher);
+    public static function setEventDispatcher(EventDispatcherInterface $eventDispatcher);
 
     /**
      * @return EventDispatcherInterface
      */
-    static public function getEventDispatcher();
+    public static function getEventDispatcher();
 }

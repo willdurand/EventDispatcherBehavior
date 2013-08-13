@@ -132,7 +132,7 @@ class EventDispatcherObjectBuilderModifier
         $script = preg_replace('#(implements Persistent)#', '$1, EventDispatcherAwareModelInterface', $script);
 
         // rename the dummy_construct to __construct if __construct does not exists
-        if(strpos($script, 'function __construct') === false) {
+        if (strpos($script, 'function __construct') === false) {
             $script = str_replace('function dummy_construct', 'function __construct', $script);
         }
 
