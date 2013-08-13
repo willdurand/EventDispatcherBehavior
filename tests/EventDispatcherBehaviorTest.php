@@ -9,8 +9,8 @@ class EventDispatcherBehaviorTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!class_exists('Post')) {
-            $schema = <<<EOF
+        $tables = array(
+            'Post' => <<<EOF
 <database name="event_dispatcher_behavior" defaultIdMethod="native">
     <table name="post">
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
@@ -19,15 +19,31 @@ class EventDispatcherBehaviorTest extends \PHPUnit_Framework_TestCase
         <behavior name="event_dispatcher" />
     </table>
 </database>
-EOF;
+EOF
+            ,
+            'Thread' => <<<EOF
+<database name="event_dispatcher_behavior2" defaultIdMethod="native">
+    <table name="thread">
+        <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+        <column name="text" type="VARCHAR" required="true" />
+        <column name="allowed" type="boolean" required="true" defaultValue="false" />
 
-            $builder = new PropelQuickBuilder();
-            $config  = $builder->getConfig();
-            $config->setBuildProperty('behavior.event_dispatcher.class', '../src/EventDispatcherBehavior');
-            $builder->setConfig($config);
-            $builder->setSchema($schema);
+        <behavior name="event_dispatcher" />
+    </table>
+</database>
+EOF
+        );
 
-            $builder->build();
+        foreach($tables as $className => $schema) {
+            if (!class_exists($className)) {
+                $builder = new PropelQuickBuilder();
+                $config  = $builder->getConfig();
+                $config->setBuildProperty('behavior.event_dispatcher.class', '../src/EventDispatcherBehavior');
+                $builder->setConfig($config);
+                $builder->setSchema($schema);
+
+                $builder->build();
+            }
         }
     }
 
@@ -43,6 +59,7 @@ EOF;
         $this->assertTrue(defined('Post::EVENT_POST_INSERT'));
         $this->assertTrue(defined('Post::EVENT_PRE_DELETE'));
         $this->assertTrue(defined('Post::EVENT_POST_DELETE'));
+        $this->assertTrue(defined('Post::EVENT_CONSTRUCT'));
     }
 
     public function testGetDispatcher()
@@ -58,8 +75,25 @@ EOF;
     {
         $preSaveFired  = false;
         $postSaveFired = false;
+        $postConstructFired = false;
+        $threadConstructFired = false;
 
         $that = $this;
+
+        Post::getEventDispatcher()->addListener(Post::EVENT_CONSTRUCT, function (Event $event) use (& $postConstructFired, $that) {
+            $postConstructFired = true;
+
+            $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
+            $that->assertInstanceOf('Post', $event->getSubject());
+        });
+
+        Thread::getEventDispatcher()->addListener(Thread::EVENT_CONSTRUCT, function (Event $event) use (& $threadConstructFired, $that) {
+            $threadConstructFired = true;
+
+            $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
+            $that->assertInstanceOf('Thread', $event->getSubject());
+        });
+
         Post::getEventDispatcher()->addListener(Post::EVENT_PRE_SAVE, function (Event $event) use (& $preSaveFired, $that) {
             $preSaveFired = true;
 
@@ -74,7 +108,12 @@ EOF;
             $that->assertInstanceOf('Post', $event->getSubject());
         });
 
+        new Thread();
+        $this->assertTrue($threadConstructFired);
+
         $post = new Post();
+        $this->assertTrue($postConstructFired);
+
         $post->setName('a-name');
         $post->save();
 
