@@ -60,6 +60,7 @@ EOF
         $this->assertTrue(defined('Post::EVENT_PRE_DELETE'));
         $this->assertTrue(defined('Post::EVENT_POST_DELETE'));
         $this->assertTrue(defined('Post::EVENT_CONSTRUCT'));
+        $this->assertTrue(defined('Post::EVENT_POST_HYDRATE'));
     }
 
     public function testGetDispatcher()
@@ -76,9 +77,17 @@ EOF
         $preSaveFired  = false;
         $postSaveFired = false;
         $postConstructFired = false;
+        $postHydrateFired  = false;
         $threadConstructFired = false;
 
         $that = $this;
+
+        Post::getEventDispatcher()->addListener(Post::EVENT_POST_HYDRATE, function (Event $event) use (& $postHydrateFired, $that) {
+            $postHydrateFired = true;
+
+            $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
+            $that->assertInstanceOf('Post', $event->getSubject());
+        });
 
         Post::getEventDispatcher()->addListener(Post::EVENT_CONSTRUCT, function (Event $event) use (& $postConstructFired, $that) {
             $postConstructFired = true;
@@ -111,12 +120,15 @@ EOF
         new Thread();
         $this->assertTrue($threadConstructFired);
 
+
         $post = new Post();
         $this->assertTrue($postConstructFired);
 
         $post->setName('a-name');
         $post->save();
+        $post->reload();
 
+        $this->assertTrue($postHydrateFired);
         $this->assertTrue($preSaveFired);
         $this->assertTrue($postSaveFired);
     }
