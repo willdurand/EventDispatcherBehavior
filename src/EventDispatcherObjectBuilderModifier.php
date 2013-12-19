@@ -17,6 +17,7 @@ class EventDispatcherObjectBuilderModifier
         $events = array();
         foreach (array(
             'construct',
+            'post_hydrate',
             'pre_save', 'post_save',
             'pre_update', 'post_update',
             'pre_insert', 'post_insert',
@@ -69,6 +70,13 @@ class EventDispatcherObjectBuilderModifier
         return '    ' . $this->behavior->renderTemplate('objectHook', array(
             'eventName' => $this->getEventName('construct'),
         )) . '    ';
+    }
+
+    public function postHydrate()
+    {
+        return $this->behavior->renderTemplate('objectHook', array(
+            'eventName' => $this->getEventName('post_hydrate'),
+        ));
     }
 
     public function preSave()
