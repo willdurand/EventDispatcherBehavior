@@ -87,6 +87,7 @@ EOF
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('Post', $event->getSubject());
+            $that->assertFalse($event->hasArgument('connection'));
         });
 
         Post::getEventDispatcher()->addListener(Post::EVENT_CONSTRUCT, function (Event $event) use (& $postConstructFired, $that) {
@@ -94,6 +95,7 @@ EOF
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('Post', $event->getSubject());
+            $that->assertFalse($event->hasArgument('connection'));
         });
 
         Thread::getEventDispatcher()->addListener(Thread::EVENT_CONSTRUCT, function (Event $event) use (& $threadConstructFired, $that) {
@@ -101,6 +103,7 @@ EOF
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('Thread', $event->getSubject());
+            $that->assertFalse($event->hasArgument('connection'));
         });
 
         Post::getEventDispatcher()->addListener(Post::EVENT_PRE_SAVE, function (Event $event) use (& $preSaveFired, $that) {
@@ -108,6 +111,7 @@ EOF
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('Post', $event->getSubject());
+            $that->assertInstanceOf('PropelPDO', $event->getArgument('connection'));
         });
 
         Post::getEventDispatcher()->addListener(Post::EVENT_POST_SAVE, function (Event $event) use (& $postSaveFired, $that) {
@@ -115,6 +119,7 @@ EOF
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('Post', $event->getSubject());
+            $that->assertInstanceOf('PropelPDO', $event->getArgument('connection'));
         });
 
         new Thread();
