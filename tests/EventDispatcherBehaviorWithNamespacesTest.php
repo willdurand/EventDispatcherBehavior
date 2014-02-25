@@ -66,6 +66,7 @@ EOF;
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('My\Post', $event->getSubject());
+            $that->assertInstanceOf('PropelPDO', $event->getArgument('connection'));
         });
 
         Post::getEventDispatcher()->addListener(Post::EVENT_POST_SAVE, function (Event $event) use (& $postSaveFired, $that) {
@@ -73,6 +74,7 @@ EOF;
 
             $that->assertInstanceOf('Symfony\Component\EventDispatcher\GenericEvent', $event);
             $that->assertInstanceOf('My\Post', $event->getSubject());
+            $that->assertInstanceOf('PropelPDO', $event->getArgument('connection'));
         });
 
         $post = new Post();

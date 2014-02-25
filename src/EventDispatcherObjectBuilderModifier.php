@@ -68,70 +68,80 @@ class EventDispatcherObjectBuilderModifier
     public function addConstructHook()
     {
         return '    ' . $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('construct'),
+            'eventName'      => $this->getEventName('construct'),
+            'withConnection' => false,
         )) . '    ';
     }
 
     public function postHydrate()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('post_hydrate'),
+            'eventName'      => $this->getEventName('post_hydrate'),
+            'withConnection' => false,
         ));
     }
 
     public function preSave()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('pre_save'),
+            'eventName'      => $this->getEventName('pre_save'),
+            'withConnection' => true,
         ));
     }
 
     public function postSave()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('post_save'),
+            'eventName'      => $this->getEventName('post_save'),
+            'withConnection' => true,
         ));
     }
 
     public function preUpdate()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('pre_update'),
+            'eventName'      => $this->getEventName('pre_update'),
+            'withConnection' => true,
         ));
     }
 
     public function postUpdate()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('post_update'),
+            'eventName'      => $this->getEventName('post_update'),
+            'withConnection' => true,
         ));
     }
 
     public function preInsert()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('pre_insert'),
+            'eventName'      => $this->getEventName('pre_insert'),
+            'withConnection' => true,
         ));
     }
 
     public function postInsert()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('post_insert'),
+            'eventName'      => $this->getEventName('post_insert'),
+            'withConnection' => true,
         ));
     }
 
     public function preDelete()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('pre_delete'),
+            'eventName'      => $this->getEventName('pre_delete'),
+            'withConnection' => true,
         ));
     }
 
     public function postDelete()
     {
         return $this->behavior->renderTemplate('objectHook', array(
-            'eventName' => $this->getEventName('post_delete'),
+            'eventName'      => $this->getEventName('post_delete'),
+            'withConnection' => true,
         ));
     }
 
